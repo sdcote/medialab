@@ -10,3 +10,5 @@ There are several SnapJobs that are designed to help with management of a large 
 
 ## Building
 This project uses Maven to build. The current JDK used is Java 25 as that is what is currently being used by Coyote Commons.
+
+It is suggested to download the Coyote Commons project and build it (`mvn clean install`) first. This will place the library in your Maven cache. You can then build and run this project.
