@@ -1,12 +1,18 @@
 {
   "RtwJob":{
+    "Description": [
+      "This gets a list of all the file in a particular directory that match what we expect our phone to generate.",
+      "The file classifier then splits them into either images or videos"
+    ],
 
     "Vault": { "filename": "[#$sys.app.home#][#$sys.file.separator#]sdcote.vault", "password": "[#$env.vault.password#]" },
 
     "Reader" : {
       "class" : "DirectoryReader",
-      "directory" : "[#$sys.user.home#]",
-      "pattern" : ".*"
+      "directory" : "/Volumes/PRO-G40/Media/Phone",
+      "pattern" : ".*",
+      "pattern2" : "(?i)^IMG_.*..*$",
+      "pattern3" : "(?i)^\\\\d+_\\\\d+\\\\.[a-z0-9]+$"
     },
 
     "Transform": {
@@ -16,9 +22,12 @@
           "jpeg": "images",
           "png": "images",
           "gif": "images",
+          "heic": "images",
+          "dng": "images",
           "mp4": "videos",
           "mov": "videos",
-          "avi": "videos"
+          "avi": "videos",
+          "3gp": "videos"
         }
       }
     },
