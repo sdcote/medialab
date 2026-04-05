@@ -13,6 +13,16 @@
       "MediaDateClassifier": {  }
     },
 
+    "PostProcessing": {
+      "MergeDirectory": {
+        "source": "/Volumes/PRO-G40/Media/Phone/Images",
+        "target": "/Volumes/PRO-G40/Media/Pictures",
+        "move": true,
+        "overwrite":false,
+        "rename": true
+      }
+    },
+
     "Logging": {
       "StandardError": { "categories": "warn, error, fatal" },
       "StandardOutput": { "categories": "debug, trace, info, notice" }
