@@ -17,14 +17,14 @@
         <dependency>
             <groupId>coyote</groupId>
             <artifactId>commons</artifactId>
-            <version>1.19.1</version>
+            <version>1.20.0</version>
         </dependency>
 
         <!-- Metadata Access- https://github.com/drewnoakes/metadata-extractor -->
         <dependency>
             <groupId>com.drewnoakes</groupId>
             <artifactId>metadata-extractor</artifactId>
-            <version>2.19.0</version>
+            <version>2.20.0</version>
         </dependency>
 
 

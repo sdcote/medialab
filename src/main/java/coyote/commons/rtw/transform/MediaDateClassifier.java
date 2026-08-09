@@ -4,6 +4,7 @@ import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.drew.metadata.iptc.IptcDirectory;
+import com.drew.metadata.mov.QuickTimeDirectory;
 import com.drew.metadata.mov.metadata.QuickTimeMetadataDirectory;
 import com.drew.metadata.mp4.Mp4Directory;
 import com.drew.metadata.xmp.XmpDirectory;
@@ -67,13 +68,12 @@ public class MediaDateClassifier extends FileDateClassifier {
 
             // Try QuickTime (MOV)
             if (retval == 0) {
-                QuickTimeMetadataDirectory qtDir = metadata.getFirstDirectoryOfType(QuickTimeMetadataDirectory.class);
+                QuickTimeDirectory qtDir = metadata.getFirstDirectoryOfType(QuickTimeDirectory.class);
                 if (qtDir != null) {
-                    Date date = qtDir.getDate(QuickTimeMetadataDirectory.TAG_CREATION_DATE);
-                    if (date != null) retval = date.getTime();
+                    Date creationTime = qtDir.getDate(QuickTimeDirectory.TAG_CREATION_TIME);
+                    if (creationTime != null) retval = creationTime.getTime();
                 }
             }
-
         } catch (Exception e) {
             if (Log.isLogging(Log.DEBUG_EVENTS)) {
                 Log.debug("MediaDateClassifier: Could not read metadata for " + file.getAbsolutePath() + ": " + e.getMessage());

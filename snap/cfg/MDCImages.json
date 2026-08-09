@@ -1,33 +1,42 @@
 {
-  "RtwJob":{
+  "Job": {
+    "class": "coyote.RtwJob",
+    "configuration": {
+      "Vault": {
+        "filename": "[#$sys.app.home#][#$sys.file.separator#]sdcote.vault",
+        "password": "[#$env.vault.password#]"
+      },
+      "Reader": {
+        "description": [
+          "Only process HEIC, which is what my phone uses for pictures I take.",
+          "All other should be downloaded images"
+          ],
+        "class": "DirectoryReader",
+        "directory": "/Volumes/PRO-G40/Media/Phone/Images",
+        "patternALL": ".*",
+        "pattern": "(?i)^.*\\.HEIC$"
 
-    "Vault": { "filename": "[#$sys.app.home#][#$sys.file.separator#]sdcote.vault", "password": "[#$env.vault.password#]" },
-
-    "Reader" : {
-      "class" : "DirectoryReader",
-      "directory" : "/Volumes/PRO-G40/Media/Phone/Images",
-      "pattern" : ".*"
-    },
-
-    "Transform": {
-      "MediaDateClassifier": {  }
-    },
-
-    "PostProcessing": {
-      "MergeDirectory": {
-        "source": "/Volumes/PRO-G40/Media/Phone/Images",
-        "target": "/Volumes/PRO-G40/Media/Pictures",
-        "move": true,
-        "overwrite":false,
-        "rename": true
-      }
-    },
-
-    "Logging": {
-      "StandardError": { "categories": "warn, error, fatal" },
-      "StandardOutput": { "categories": "debug, trace, info, notice" }
+      },
+      "Transform": [
+        {
+          "class": "MediaDateClassifier"
+        }
+      ],
+      "PostProcess": [
+        {
+          "class": "MergeDirectory",
+          "source": "/Volumes/PRO-G40/Media/Phone/Images",
+          "target": "/Volumes/PRO-G40/Media/Pictures",
+          "move": true,
+          "overwrite": false,
+          "rename": true,
+          "enabled": false
+        }
+      ]
     }
-
-  }
-
+  },
+  "logging": [
+    { "StandardError": { "categories": "warn, error, fatal", "name": "error" } },
+    { "StandardOutput": { "categories": "debug, trace, info, notice", "name": "default" } }
+  ]
 }

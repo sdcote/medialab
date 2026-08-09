@@ -1,33 +1,51 @@
 {
-  "RtwJob":{
-
-    "Vault": { "filename": "[#$sys.app.home#][#$sys.file.separator#]sdcote.vault", "password": "[#$env.vault.password#]" },
-
-    "Reader" : {
-      "class" : "DirectoryReader",
-      "directory" : "/Volumes/PRO-G40/Media/Phone/Videos",
-      "pattern" : ".*"
-    },
-
-    "Transform": {
-      "MediaDateClassifier": {  }
-    },
-
-    "Postprocess": {
-      "MergeDirectory": {
-        "source": "/Volumes/PRO-G40/Media/Phone/Videos",
-        "target": "/Volumes/PRO-G40/Media/Videos",
-        "move": true,
-        "overwrite":false,
-        "rename": true
+  "Job": {
+    "class": "coyote.RtwJob",
+    "configuration": {
+      "Vault": {
+        "filename": "[#$sys.app.home#][#$sys.file.separator#]sdcote.vault",
+        "password": "[#$env.vault.password#]"
+      },
+      "Reader": {
+        "description": [
+          "Only process MOV, which is what my phone uses for videos I take.",
+          "All other should be downloaded videos"
+        ],
+        "class": "DirectoryReader",
+        "directory": "/Volumes/PRO-G40/Media/Phone/Videos",
+        "patternALL": ".*",
+        "pattern": "(?i)^.*\\.MOV$"
+      },
+      "Transform": [
+        {
+          "class": "MediaDateClassifier"
+        }
+      ],
+      "Postprocess": [
+        {
+          "class": "MergeDirectory",
+          "source": "/Volumes/PRO-G40/Media/Phone/Videos",
+          "target": "/Volumes/PRO-G40/Media/Videos",
+          "move": true,
+          "overwrite": false,
+          "rename": true,
+          "enabled": false
+        }
+      ]
+    }
+  },
+  "logging": [
+    {
+      "StandardError": {
+        "categories": "warn, error, fatal",
+        "name": "error"
       }
     },
-
-    "Logging": {
-      "StandardError": { "categories": "warn, error, fatal" },
-      "StandardOutput": { "categories": "debug, trace, info, notice" }
+    {
+      "StandardOutput": {
+        "categories": "debug, trace, info, notice",
+        "name": "default"
+      }
     }
-
-  }
-
+  ]
 }

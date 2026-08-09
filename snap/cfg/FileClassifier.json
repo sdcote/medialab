@@ -1,42 +1,43 @@
 {
-  "RtwJob":{
-    "Description": [
-      "This gets a list of all the file in a particular directory that match what we expect our phone to generate.",
-      "The file classifier then splits them into either images or videos"
-    ],
-
-    "Vault": { "filename": "[#$sys.app.home#][#$sys.file.separator#]sdcote.vault", "password": "[#$env.vault.password#]" },
-
-    "Reader" : {
-      "class" : "DirectoryReader",
-      "directory" : "/Volumes/PRO-G40/Media/Phone",
-      "pattern" : ".*",
-      "pattern2" : "(?i)^IMG_.*..*$",
-      "pattern3" : "(?i)^\\\\d+_\\\\d+\\\\.[a-z0-9]+$"
-    },
-
-    "Transform": {
-      "FileClassifier": {
-        "map": {
-          "jpg": "images",
-          "jpeg": "images",
-          "png": "images",
-          "gif": "images",
-          "heic": "images",
-          "dng": "images",
-          "mp4": "videos",
-          "mov": "videos",
-          "avi": "videos",
-          "3gp": "videos"
+  "Job": {
+    "class": "coyote.RtwJob",
+    "configuration": {
+      "Description": [
+        "This gets a list of all the files in a particular directory that match what we expect our phone to generate.",
+        "The file classifier then splits them into either images or videos"
+      ],
+      "Vault": {
+        "filename": "[#$sys.app.home#][#$sys.file.separator#]sdcote.vault",
+        "password": "[#$env.vault.password#]"
+      },
+      "Reader": {
+        "class": "DirectoryReader",
+        "directory": "/Volumes/PRO-G40/Media/Phone",
+        "pattern": ".*",
+        "pattern2": "(?i)^IMG_.*..*$",
+        "pattern3": "(?i)^\\\\d+_\\\\d+\\\\.[a-z0-9]+$"
+      },
+      "Transform": [
+        {
+          "class": "FileClassifier",
+          "map": {
+            "jpg": "images",
+            "jpeg": "images",
+            "png": "images",
+            "gif": "images",
+            "heic": "images",
+            "dng": "images",
+            "mp4": "videos",
+            "mov": "videos",
+            "avi": "videos",
+            "3gp": "videos"
+          }
         }
-      }
-    },
-
-    "Logging": {
-      "StandardError": { "categories": "warn, error, fatal" },
-      "StandardOutput": { "categories": "debug, trace, info, notice" }
+      ]
     }
-
-  }
-
+  },
+  "logging": [
+    { "StandardError": { "categories": "warn, error, fatal", "name": "error" } },
+    { "StandardOutput": { "categories": "debug, trace, info, notice", "name": "default" } }
+  ]
 }
